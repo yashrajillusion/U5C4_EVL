@@ -9,17 +9,17 @@ export const Home = () => {
   const [subdata, setsubdata] = useState([]);
   const [allmeetup, setallmeetup] = useState([]);
   const dispatch = useDispatch();
-  const status = useRef(true);
+  const [status, setStatus] = useState(true);
   useEffect(() => {
     data();
   }, []);
 
-  if (status.current) {
+  if (status) {
     const current_user =
       JSON.parse(localStorage.getItem("userLoginDetails")) || null;
 
     if (current_user != null) {
-      status.current = false;
+      setStatus(false);
       dispatch(userLogin(current_user));
     }
   }
@@ -34,7 +34,8 @@ export const Home = () => {
     let res = await axios.get("http://localhost:8080/meetups");
 
     var alldb = await res.data;
-    if (user.current) {
+
+    if (status) {
       setallmeetup(alldb);
     } else {
       let newdb = [...alldb];
@@ -45,30 +46,26 @@ export const Home = () => {
         ) {
           return el;
         }
+        setallmeetup(newdb);
       });
       // newdb = newdb.filter(
       //   (el) =>
       //     user.interests.includes(el.theme) && el.location === user.location
       // );
+      alldb = alldb.filter((el) => user.subscribed.includes(el.id));
 
-      setallmeetup(newdb);
+      alldb.sort((a, b) => {
+        return new Date(a.date) - new Date(b.date);
+      });
+
+      setsubdata(alldb);
     }
-    alldb = alldb.filter((el) => user.subscribed.includes(el.id));
-
-    alldb.sort((a, b) => {
-      return new Date(a.date) - new Date(b.date);
-    });
-
-    setsubdata(alldb);
   };
-  console.log(allmeetup);
-  if (subdata.length === 0) {
-    return <h2>..Loading</h2>;
-  }
 
   if (allmeetup.length === 0) {
     return <h2>..Loading</h2>;
   }
+  console.log(allmeetup);
   // Filter on the basis of Users interests and location (both true)
   return (
     <div className="homeContainer">
@@ -98,7 +95,7 @@ export const Home = () => {
         </>
       )}
 
-      {status.current === false ? (
+      {status === false ? (
         <div className="subscribedData">
           <div>
             <select
