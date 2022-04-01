@@ -46,10 +46,7 @@ export const LoginSignUp = () => {
     axios.get("http://localhost:8080/users").then(({ data }) => {
       data.map((el) => {
         if (el.name === name && el.password === password) {
-          localStorage.setItem(
-            "userLoginDetails",
-            JSON.stringify({ name, password })
-          );
+          localStorage.setItem("userLoginDetails", JSON.stringify({ ...el }));
 
           dispatch(userLogin(el));
         }

@@ -3,13 +3,15 @@
     {
       "name": "yash",
       "password": "raj",
-      "location": "kolkata",
+      "location": "bangalore",
       "interests": [
         "technology",
         "movies"
       ],
       "image": "some.ht",
-      "subscribed": [],
+      "subscribed": [
+        3, 2 , 1
+      ],
       "id": 1
     }
   ],
@@ -27,12 +29,22 @@
     {
       "title": "Saunter Strech",
       "location": "bangalore",
-      "date": "2022-03-25",
+      "date": "2022-04-25",
       "time": "23:59",
       "theme": "technology",
       "description": "Random Event",
       "image": "https://images.unsplash.com/photo",
       "id": 2
+    },
+    {
+      "title": "yash",
+      "location": "bangalore",
+      "date": "2022-05-25",
+      "time": "12",
+      "theme": "food",
+      "description": "dd",
+      "image": "l",
+      "id": 3
     }
   ]
 }
